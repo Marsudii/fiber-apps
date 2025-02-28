@@ -1,0 +1,22 @@
+name: CI/CD Workflow with GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Print Success Message
+        run: echo "✅ GitHub Actions berjalan dengan sukses!"
