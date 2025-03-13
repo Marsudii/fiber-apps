@@ -10,7 +10,6 @@ import (
 
 func main() {
 	app := fiber.New()
-
 	// Middleware untuk mencatat log setiap request
 	app.Use(logger.New(logger.Config{
 		Format:     "[${time}] ${ip} - ${method} ${path} ${status} ${latency} - ${ua}\n",
