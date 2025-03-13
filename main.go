@@ -20,7 +20,7 @@ func main() {
 
 	// Route utama
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, Fiber! Push to VM with GitHub Actions")
+		return c.SendString("Hello, Fiber! Push to VM with GitHub Actions and Docker!")
 	})
 
 	// Route lain untuk testing
