@@ -1,22 +1,41 @@
-name: CI/CD Workflow with GitHub Actions
+name: Auto Deploy to VM
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+      - main # Auto deploy saat push ke main
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Print Success Message
-        run: echo "✅ GitHub Actions berjalan dengan sukses!"
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.HOST }}@${{ secrets.IP }} << 'EOF'
+          echo "✅ Connected to VM"
+
+          # Navigasi ke folder project
+          cd /path/to/project || exit 1  # Ganti dengan path yang sesuai
+
+          # Tarik perubahan terbaru dari Git
+          git reset --hard  # Hindari konflik jika ada perubahan di VM
+          git pull origin main  # Tarik update terbaru
+
+          # Hentikan container lama
+          docker-compose down
+
+          # Build ulang dan jalankan container baru
+          docker-compose up -d --build
+
+          echo "🚀 Deployment berhasil!"
+          EOF
