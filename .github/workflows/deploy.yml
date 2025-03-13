@@ -25,7 +25,7 @@ jobs:
           echo "✅ Connected to VM"
 
           # Navigasi ke folder project
-          cd /path/to/project || exit 1  # Ganti dengan path yang sesuai
+          cd /home/fiber-apps || exit 1  # Ganti dengan path yang sesuai
 
           # Tarik perubahan terbaru dari Git
           git reset --hard  # Hindari konflik jika ada perubahan di VM
