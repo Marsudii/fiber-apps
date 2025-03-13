@@ -24,20 +24,24 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.HOST }}@${{ secrets.IP }} << 'EOF'
           echo "✅ Connected to VM"
 
-          # Navigasi ke folder project
-          cd /home/fiber-apps || exit 1  # Ganti dengan path yang sesuai
+          # Pastikan folder project ada
+          if [ ! -d "/home/fiber-apps" ]; then
+            echo "❌ Error: Folder /home/fiber-apps tidak ditemukan"
+            exit 1
+          fi
 
-          # Tarik perubahan terbaru dari Git
-          git reset --hard  # Hindari konflik jika ada perubahan di VM
-          git pull origin main  # Tarik update terbaru
+          cd /home/fiber-apps || exit 1
+          echo "📦 Pulling latest changes from Git..."
+          git reset --hard
+          git pull origin main
 
-          # Hentikan container lama
+          echo "🛑 Stopping old Docker containers..."
           docker-compose down
 
-          # Build ulang dan jalankan container baru
+          echo "🚀 Building and starting new containers..."
           docker-compose up -d --build
 
-          echo "🚀 Deployment berhasil!"
+          echo "✅ Deployment berhasil!"
           EOF
 
       - name: Cleanup Unused Docker Images
