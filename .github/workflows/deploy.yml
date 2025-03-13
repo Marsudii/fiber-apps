@@ -39,3 +39,11 @@ jobs:
 
           echo "🚀 Deployment berhasil!"
           EOF
+
+      - name: Cleanup Unused Docker Images
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.HOST }}@${{ secrets.IP }} << 'EOF'
+          echo "🧹 Cleaning up unused Docker images..."
+          docker image prune -a -f
+          echo "✅ Cleanup selesai!"
+          EOF
