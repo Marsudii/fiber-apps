@@ -9,3 +9,5 @@ services:
     environment:
       - PORT=8080
     restart: always
+    networks:
+      - web-app 
