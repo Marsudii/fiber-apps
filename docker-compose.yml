@@ -2,7 +2,8 @@ version: "3.2"
 
 services:
   gofiber:
-    build: .
+    container_name: gofiber
+    image: fiber-apps:latest
     ports:
       - "8080:8080"
     environment:

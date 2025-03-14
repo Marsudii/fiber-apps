@@ -38,10 +38,14 @@ jobs:
           echo "🛑 Stopping old Docker containers..."
           docker-compose down
 
-          echo "🚀 Building and starting new containers..."
-          docker-compose up -d --build
+          echo " BUILD DOCKER IMAGE TAG LATEST..."
+          docker build -t fiber-apps:latest .
 
+
+          echo "🚀 Building and starting new containers..."
+          docker-compose up -d 
           echo "✅ Deployment berhasil!"
+          exit
           EOF
 
       - name: Cleanup Unused Docker Images
@@ -50,4 +54,6 @@ jobs:
           echo "🧹 Cleaning up unused Docker images..."
           docker image prune -a -f
           echo "✅ Cleanup selesai!"
+          echo "CLOSE CONNCETION SSH..."
+          exit
           EOF
