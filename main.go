@@ -21,7 +21,7 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status":  "success",
-			"message": "Backend service is running",
+			"message": "Backend service is running (use docker prune)",
 		})
 	})
 
