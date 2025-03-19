@@ -17,6 +17,13 @@ func main() {
 		TimeZone:   "Asia/Jakarta",
 	}))
 
+	// add cors
+	app.Use(func(c *fiber.Ctx) error {
+		c.Set("Access-Control-Allow-Origin", "http://103.183.75.214:3000")
+		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+		return c.Next()
+	})
+
 	// Route utama
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
