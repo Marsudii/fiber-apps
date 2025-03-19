@@ -19,7 +19,10 @@ func main() {
 
 	// Route utama
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("BISMILAH TEST PUSH v1")
+		return c.JSON(fiber.Map{
+			"status":  "success",
+			"message": "Backend service is running",
+		})
 	})
 
 	// Route lain untuk testing
