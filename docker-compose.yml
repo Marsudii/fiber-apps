@@ -12,4 +12,7 @@ services:
     networks:
       - web-app
 
+networks:
+  web-app:
+    external: true
     
