@@ -19,7 +19,7 @@ func main() {
 
 	// Route utama
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("V1.0.0 docker prune wkkwkwk")
+		return c.SendString("BISMILAH TEST PUSH")
 	})
 
 	// Route lain untuk testing
