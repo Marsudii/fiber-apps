@@ -19,7 +19,7 @@ func main() {
 
 	// Route utama
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("BISMILAH TEST PUSH")
+		return c.SendString("BISMILAH TEST PUSH v1")
 	})
 
 	// Route lain untuk testing
